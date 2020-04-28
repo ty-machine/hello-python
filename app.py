@@ -1,9 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify
+import json, os
+
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Flask in a Docker container'
+    return jsonify(dict(os.environ))
 
 
 if __name__ == '__main__':
