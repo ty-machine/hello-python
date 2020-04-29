@@ -8,6 +8,7 @@ jobs:
     environment:
       IMAGE_NAME: hello-python
     executor: python/default
+    steps: []
   build: &build
     <<: *setup
     steps:
