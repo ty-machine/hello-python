@@ -19,7 +19,7 @@ jobs:
           command: |
             docker build -t $IMAGE_NAME .
   publish-latest:
-    <<: *deploy
+    <<: *build
     steps:
       - setup_remote_docker
       - run:
@@ -32,7 +32,7 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $DOCKERHUB_ORG/$IMAGE_NAME:latest
   publish-branch:
-    <<: *deploy
+    <<: *build
     steps:
       - setup_remote_docker
       - run:
