@@ -22,6 +22,7 @@ jobs:
       IMAGE_NAME: hello-python
     executor: python/default
     steps:
+      - setup_remote_docker
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
@@ -32,6 +33,7 @@ jobs:
       IMAGE_NAME: hello-python
     executor: python/default
     steps:
+      - setup_remote_docker
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
