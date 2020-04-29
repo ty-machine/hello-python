@@ -26,11 +26,11 @@ jobs:
     <<: *setup
     steps:
       - run:
-          name: Tag image to ship
+          name: Tag image to ship with branch and build num
           command: |
             docker tag $IMAGE_NAME $DOCKERHUB_ORG/$IMAGE_NAME:$CIRCLE_BRANCH$CIRCLE_BUILD_NUM
       - run:
-          name: Publish Docker Image to Docker Hub
+          name: Publish Docker Image to Docker Hub with branch and build num
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:$CIRCLE_BRANCH$CIRCLE_BUILD_NUM
@@ -38,11 +38,11 @@ jobs:
     <<: *setup
     steps:
       - run:
-          name: Tag image to ship
+          name: Tag image to ship with custom tag
           command: |
             docker tag $IMAGE_NAME $DOCKERHUB_ORG/$IMAGE_NAME:$IMAGE_TAG
       - run:
-          name: Publish Docker Image to Docker Hub
+          name: Publish Docker Image to Docker Hub with custom tag
           command: |
             docker push $DOCKERHUB_ORG/$IMAGE_NAME:$IMAGE_TAG
   publish-branch: &publish-branch
@@ -50,6 +50,8 @@ jobs:
     <<: *publish
   publish-latest:
     <<: *publish-branch
+    environment:
+      IMAGE_TAG: latest
     <<: *latest
 workflows:
   version: 2
