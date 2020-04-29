@@ -4,10 +4,12 @@ orbs:
   python: circleci/python@0.2.1
 
 jobs:
-  build: &build
+  setup: &setup
     environment:
       IMAGE_NAME: hello-python
     executor: python/default
+  build: &build
+    <<: *setup
     steps:
       - checkout
       - python/load-cache
@@ -19,7 +21,7 @@ jobs:
           command: |
             docker build -t $IMAGE_NAME .
   publish: &publish
-    <<: *build
+    <<: *setup
     steps:
       - setup_remote_docker
       - run:
@@ -32,6 +34,7 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:$CIRCLE_BRANCH$CIRCLE_BUILD_NUM
   latest: &latest
+    <<: *setup
     steps:
       - run:
           name: Tag image to ship
