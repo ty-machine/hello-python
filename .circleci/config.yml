@@ -8,7 +8,8 @@ jobs:
     environment:
       IMAGE_NAME: hello-python
     executor: python/default
-    steps: []
+    steps: 
+      - setup_remote_docker
   build: &build
     <<: *setup
     steps:
@@ -24,7 +25,6 @@ jobs:
   publish: &publish
     <<: *setup
     steps:
-      - setup_remote_docker
       - run:
           name: Tag image to ship
           command: |
